@@ -10,7 +10,7 @@ export function Projects() {
         eyebrow="Наши объекты"
         title="Техника в реальной работе"
         text="Примеры комплексных задач: земляные работы, подъём, перевозка и подготовка территорий."
-        image="media/crane-truck.jpg"
+        image="media/xcmg-qy25k.jpg"
       />
       <section className="section">
         <div className="shell gallery">

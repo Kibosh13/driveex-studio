@@ -48,7 +48,7 @@ export function Catalog() {
         eyebrow="Каталог"
         title="Спецтехника в аренду"
         text="Сравните характеристики и стоимость. Если не уверены в выборе, опишите задачу — мы подберём машину под условия объекта."
-        image="media/hero-excavator.jpg"
+        image="media/hitachi-zx200.jpg"
       />
       <section className="section">
         <div className="shell">

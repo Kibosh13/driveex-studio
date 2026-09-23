@@ -165,7 +165,7 @@ export function Home() {
       <section className="section">
         <div className="shell split">
           <Reveal className="split-photo">
-            <img src={asset("media/excavator-work.jpg")} alt="Работа спецтехники на городском объекте" />
+            <img src={asset("media/hitachi-zx200.jpg")} alt="Работа спецтехники на городском объекте" />
             <div>
               <b>2 400+</b>
               <span>заказов выполнено за прошлый год</span>

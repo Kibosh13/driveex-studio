@@ -17,7 +17,7 @@ export function About() {
         eyebrow="О компании"
         title="Отвечаем за технику и результат"
         text="С 2015 года обеспечиваем строительные и промышленные объекты техникой с экипажем по Москве и Московской области."
-        image="media/crane-truck.jpg"
+        image="media/xcmg-qy25k.jpg"
       />
       <section className="section">
         <div className="shell split">
@@ -32,7 +32,7 @@ export function About() {
               Обсудить сотрудничество
             </button>
           </div>
-          <img className="frame-photo" src={asset("media/crane-truck.jpg")} alt="Парк спецтехники компании" />
+          <img className="frame-photo" src={asset("media/kamaz-6520.jpg")} alt="Парк спецтехники компании" />
         </div>
       </section>
       <section className="band">

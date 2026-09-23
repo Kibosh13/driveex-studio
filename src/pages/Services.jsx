@@ -12,7 +12,7 @@ export function Services() {
         eyebrow="Услуги"
         title="Работы спецтехникой под ключ"
         text="Берём на себя технику, экипаж, логистику и документы. Для комплексных задач назначаем одного менеджера и собираем парк под график объекта."
-        image="media/excavator-work.jpg"
+        image="media/hitachi-zx200.jpg"
       />
       <section className="section">
         <div className="shell service-list">
@@ -42,7 +42,7 @@ export function Services() {
               Обсудить объект <i aria-hidden="true">→</i>
             </Link>
           </div>
-          <img className="frame-photo" src={asset("media/excavator-work.jpg")} alt="Земляные работы спецтехникой" />
+          <img className="frame-photo" src={asset("media/jcb-3cx.jpg")} alt="Земляные работы спецтехникой" />
         </div>
       </section>
     </>

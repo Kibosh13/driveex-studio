@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { address, asset, email, emailHref, phone, phoneHref, region, rentalGroups, services } from "./data";
+import { address, asset, catalogSections, email, emailHref, equipment, money, phone, phoneHref, region, rentalGroups, services } from "./data";
 import { LeadModal, useLead } from "./ui";
 
 const aboutLinks = [
@@ -32,6 +32,7 @@ function Header() {
   const [menu, setMenu] = useState(false);
   const [query, setQuery] = useState("");
   const [openPanel, setOpenPanel] = useState("");
+  const [catalogOpen, setCatalogOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -43,7 +44,16 @@ function Header() {
   useEffect(() => {
     setMenu(false);
     setOpenPanel("");
+    setCatalogOpen(false);
   }, [location.pathname, location.search, location.hash]);
+
+  useEffect(() => {
+    const onKey = (event) => {
+      if (event.key === "Escape") setCatalogOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     document.body.classList.toggle("lock", menu);
@@ -58,7 +68,7 @@ function Header() {
   }
 
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`} onMouseLeave={() => setCatalogOpen(false)}>
       <div className="topbar">
         <span>{region}</span>
         <span className="dot" aria-hidden="true" />
@@ -71,34 +81,25 @@ function Header() {
         </Link>
 
         <nav className="desk-nav" aria-label="Основная навигация">
-          <div
-            className={`nav-drop ${openPanel === "tech" ? "is-open" : ""}`}
-            onMouseEnter={() => setOpenPanel("tech")}
-            onMouseLeave={() => setOpenPanel("")}
+          <button
+            className={`nav-catalog ${catalogOpen ? "is-on" : ""}`}
+            type="button"
+            aria-expanded={catalogOpen}
+            onMouseEnter={() => {
+              setOpenPanel("");
+              setCatalogOpen(true);
+            }}
+            onClick={() => setCatalogOpen(true)}
           >
-            <button type="button" aria-expanded={openPanel === "tech"} onClick={() => setOpenPanel(openPanel === "tech" ? "" : "tech")}>
-              Аренда спецтехники
-            </button>
-            <div className="mega">
-              {rentalGroups.map((group) => (
-                <div key={group.title}>
-                  <p>{group.title}</p>
-                  {group.links.map(([label, href]) => (
-                    <Link key={label} to={href}>
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-              <Link className="mega-all" to="/catalog">
-                Весь каталог →
-              </Link>
-            </div>
-          </div>
+            Аренда спецтехники
+          </button>
 
           <div
             className={`nav-drop ${openPanel === "services" ? "is-open" : ""}`}
-            onMouseEnter={() => setOpenPanel("services")}
+            onMouseEnter={() => {
+              setCatalogOpen(false);
+              setOpenPanel("services");
+            }}
             onMouseLeave={() => setOpenPanel("")}
           >
             <button type="button" aria-expanded={openPanel === "services"} onClick={() => setOpenPanel(openPanel === "services" ? "" : "services")}>
@@ -118,7 +119,10 @@ function Header() {
 
           <div
             className={`nav-drop ${openPanel === "about" ? "is-open" : ""}`}
-            onMouseEnter={() => setOpenPanel("about")}
+            onMouseEnter={() => {
+              setCatalogOpen(false);
+              setOpenPanel("about");
+            }}
             onMouseLeave={() => setOpenPanel("")}
           >
             <button type="button" aria-expanded={openPanel === "about"} onClick={() => setOpenPanel(openPanel === "about" ? "" : "about")}>
@@ -136,15 +140,6 @@ function Header() {
         </nav>
 
         <div className="header-actions">
-          <form className="head-search" onSubmit={search}>
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Техника или модель"
-              aria-label="Найти технику в аренду"
-            />
-            <button type="submit">Найти</button>
-          </form>
           <button className="btn btn-orange btn-sm" type="button" onClick={() => lead.show()}>
             Заказать звонок
           </button>
@@ -154,6 +149,14 @@ function Header() {
           </button>
         </div>
       </div>
+
+      <CatalogShelf
+        open={catalogOpen}
+        setOpen={setCatalogOpen}
+        query={query}
+        setQuery={setQuery}
+        onSearch={search}
+      />
 
       {menu && (
         <div className="mobile-menu">
@@ -205,6 +208,137 @@ function Header() {
         </div>
       )}
     </header>
+  );
+}
+
+function CatalogShelf({ open, setOpen, query, setQuery, onSearch }) {
+  const [sectionId, setSectionId] = useState(catalogSections[0].id);
+  const [suggest, setSuggest] = useState(false);
+  const section = catalogSections.find((item) => item.id === sectionId) ?? catalogSections[0];
+  const picks = equipment.filter((item) => section.equipmentSlugs?.includes(item.slug));
+  const servicePicks = services.filter((item) => section.serviceSlugs?.includes(item.slug));
+  const needle = query.trim().toLowerCase();
+  const matches = needle
+    ? equipment.filter((item) => `${item.name} ${item.categoryLabel}`.toLowerCase().includes(needle)).slice(0, 5)
+    : [];
+
+  function close() {
+    setOpen(false);
+    setSuggest(false);
+  }
+
+  return (
+    <div className="catalog-shelf">
+      <div className="shell catalog-row">
+        <button
+          className={open ? "is-on" : ""}
+          type="button"
+          aria-expanded={open}
+          onMouseEnter={() => setOpen(true)}
+          onClick={() => {
+            const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+            if (canHover) setOpen(true);
+            else setOpen((value) => !value);
+          }}
+        >
+          <span aria-hidden="true" />
+          Каталог
+        </button>
+        <form className="catalog-search" onSubmit={(event) => { onSearch(event); close(); }}>
+          <input
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setSuggest(true);
+            }}
+            onFocus={() => {
+              if (query.trim()) setSuggest(true);
+            }}
+            placeholder="Техника или модель"
+            aria-label="Найти технику в аренду"
+          />
+          <button type="submit">Найти</button>
+          {suggest && needle ? (
+            <div className="suggest" role="listbox">
+              {matches.length ? (
+                matches.map((item) => (
+                  <Link key={item.slug} to={`/catalog/${item.slug}`} onClick={close}>
+                    <img src={asset(item.image)} alt="" />
+                    <span>{item.name}</span>
+                    <b>от {money(item.hourPrice)}/час</b>
+                  </Link>
+                ))
+              ) : (
+                <button type="submit">Искать «{query.trim()}» в каталоге</button>
+              )}
+            </div>
+          ) : null}
+        </form>
+      </div>
+
+      <div className={`catalog-fold ${open ? "is-open" : ""}`}>
+        <div className="catalog-fold-inner">
+          <div className="catalog-board">
+            <aside>
+              <p>Основные разделы</p>
+              {catalogSections.map((item) => (
+                <Link
+                  key={item.id}
+                  to={item.href}
+                  className={item.id === section.id ? "is-on" : ""}
+                  onMouseEnter={() => setSectionId(item.id)}
+                  onFocus={() => setSectionId(item.id)}
+                  onClick={close}
+                >
+                  {item.title}
+                  <i aria-hidden="true">›</i>
+                </Link>
+              ))}
+              <Link className="catalog-all" to="/catalog" onClick={close}>
+                Весь каталог <i aria-hidden="true">→</i>
+              </Link>
+            </aside>
+            <div className="catalog-subs">
+              <p>Подразделы</p>
+              <h3>{section.title}</h3>
+              <div>
+                {section.links.map(([label, href]) => (
+                  <Link key={label} to={href} onClick={close}>
+                    {label}
+                    <i aria-hidden="true">›</i>
+                  </Link>
+                ))}
+              </div>
+              <div className="catalog-help">
+                <strong>Не знаете, что выбрать?</strong>
+                <span>Опишите задачу — подберём машину, навесное оборудование и рассчитаем подачу.</span>
+                <Link to="/contacts" onClick={close}>
+                  Получить консультацию →
+                </Link>
+              </div>
+            </div>
+            <div className="catalog-picks">
+              <p>Рекомендуем</p>
+              {picks.map((item) => (
+                <Link key={item.slug} to={`/catalog/${item.slug}`} onClick={close}>
+                  <img src={asset(item.image)} alt="" />
+                  <span>
+                    <b>{item.name}</b>
+                    <em>от {money(item.hourPrice)}/час</em>
+                  </span>
+                </Link>
+              ))}
+              {servicePicks.map((item) => (
+                <Link key={item.slug} className="pick-text" to={`/services#${item.slug}`} onClick={close}>
+                  <b>{item.title}</b>
+                  <span>{item.text}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
