@@ -9,7 +9,7 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <video autoPlay muted loop playsInline preload="auto" poster={asset("media/hero-construction.jpg")}>
+        <video autoPlay muted loop playsInline preload="auto" fetchPriority="high" poster={asset("media/hero-construction.jpg")}>
           <source src={asset("media/hero-equipment.mp4")} type="video/mp4" />
         </video>
         <div className="hero-shade" />
@@ -89,7 +89,7 @@ export function Home() {
             {homeCategories.map((category, index) => (
               <Reveal key={category.name} delay={index * 70} className={index === 0 ? "bento-lead" : ""}>
                 <Link to={category.href} className="bento-card">
-                  <img src={asset(category.image)} alt={category.name} loading="lazy" decoding="async" />
+                  <img src={asset(category.image)} alt={category.name} decoding="async" />
                   <span className="avail">В наличии</span>
                   <div>
                     <h3>{category.name}</h3>
@@ -129,7 +129,7 @@ export function Home() {
           <div className="rail">
             {equipment.slice(0, 4).map((item) => (
               <Link key={item.slug} to={`/catalog/${item.slug}`} className="rail-card">
-                <img src={asset(item.image)} alt={item.name} loading="lazy" decoding="async" />
+                <img src={asset(item.image)} alt={item.name} decoding="async" />
                 <div>
                   <p>{item.categoryLabel}</p>
                   <h3>{item.name}</h3>
@@ -164,7 +164,7 @@ export function Home() {
       <section className="section">
         <div className="shell split">
           <Reveal className="split-photo">
-            <img src={asset("media/hitachi-zx200.jpg")} alt="Работа спецтехники на городском объекте" loading="lazy" decoding="async" />
+            <img src={asset("media/hitachi-zx200.jpg")} alt="Работа спецтехники на городском объекте" decoding="async" />
             <div>
               <b>2 400+</b>
               <span>заказов выполнено за прошлый год</span>
@@ -211,7 +211,7 @@ export function Home() {
 
       <section className="director" id="director-message">
         <div className="shell director-grid">
-          <img src={asset("media/general-director.jpg")} alt="Монто Максим Александрович, генеральный директор DriveEX" loading="lazy" decoding="async" />
+          <img src={asset("media/general-director.jpg")} alt="Монто Максим Александрович, генеральный директор DriveEX" decoding="async" />
           <div>
             <p className="eyebrow light">Обращение генерального директора</p>
             <blockquote>
