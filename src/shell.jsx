@@ -75,7 +75,8 @@ function Header() {
         <span>На связи 24/7</span>
         <a href={phoneHref}>{phone}</a>
       </div>
-      <div className="header-bar shell">
+      <div className={`header-card ${catalogOpen ? "is-open" : ""}`}>
+      <div className="header-bar">
         <Link to="/" className="logo" aria-label="DriveEX — главная">
           <img src={asset("media/driveex-logo-cropped.png")} alt="DriveEX" />
         </Link>
@@ -157,6 +158,7 @@ function Header() {
         setQuery={setQuery}
         onSearch={search}
       />
+      </div>
 
       {menu && (
         <div className="mobile-menu">
