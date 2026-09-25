@@ -84,7 +84,7 @@ p { margin: 0; }
 .text-link { font-weight: 800; text-decoration: none; }
 .text-link:hover { color: var(--orange); }
 
-.view { animation: rise 0.55s var(--ease) both; }
+.view { animation: none; }
 .reveal {
   opacity: 0;
   transform: translateY(26px);
@@ -474,11 +474,6 @@ p { margin: 0; }
 .hero h1 em { font-style: normal; color: var(--orange); }
 .hero-copy > p { max-width: 38rem; margin-top: 1.2rem; color: rgba(255, 255, 255, 0.78); font-size: 1.12rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
-.hero-copy > * { animation: rise 0.85s var(--ease) both; }
-.hero-copy > *:nth-child(2) { animation-delay: 0.08s; }
-.hero-copy > *:nth-child(3) { animation-delay: 0.16s; }
-.hero-copy > *:nth-child(4) { animation-delay: 0.24s; }
-.hero-copy > *:nth-child(5) { animation-delay: 0.32s; }
 .pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .pills span {
   border: 1px solid rgba(255, 255, 255, 0.28);
@@ -499,7 +494,6 @@ p { margin: 0; }
   border-radius: 28px;
   padding: 1.35rem 1.3rem 1.15rem;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
-  animation: rise 0.9s 0.18s var(--ease) both;
 }
 .hero-card h2 { font-size: clamp(1.5rem, 2vw, 2rem); margin-bottom: 0.45rem; }
 .hero-card > p { color: var(--muted); margin-bottom: 0.9rem; }
