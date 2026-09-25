@@ -243,7 +243,12 @@ function CatalogShelf({ open, setOpen, query, setQuery, onSearch }) {
             else setOpen((value) => !value);
           }}
         >
-          <span aria-hidden="true" />
+          <svg className="grid-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <rect x="1" y="1" width="6" height="6" rx="1.2" />
+            <rect x="9" y="1" width="6" height="6" rx="1.2" />
+            <rect x="1" y="9" width="6" height="6" rx="1.2" />
+            <rect x="9" y="9" width="6" height="6" rx="1.2" />
+          </svg>
           Каталог
         </button>
         <form className="catalog-search" onSubmit={(event) => { onSearch(event); close(); }}>

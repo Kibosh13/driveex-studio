@@ -164,14 +164,21 @@ p { margin: 0; }
   font-weight: 800;
   cursor: pointer;
 }
-.catalog-row > button span {
-  width: 15px;
-  height: 11px;
-  background:
-    linear-gradient(#fff, #fff) 0 0 / 100% 2px no-repeat,
-    linear-gradient(#fff, #fff) 0 50% / 100% 2px no-repeat,
-    linear-gradient(#fff, #fff) 0 100% / 100% 2px no-repeat;
+.grid-icon { width: 16px; height: 16px; fill: currentColor; display: block; }
+.nav-drop > button,
+.nav-catalog { display: inline-flex; align-items: center; gap: 0.35rem; }
+.nav-drop > button::after,
+.nav-catalog::after {
+  content: "";
+  width: 0.38rem;
+  height: 0.38rem;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
 }
+.nav-drop.is-open > button::after,
+.nav-catalog.is-on::after { transform: translateY(1px) rotate(225deg); }
 .catalog-row > button.is-on { background: #ff6438; }
 .catalog-search {
   position: relative;
