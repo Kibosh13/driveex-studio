@@ -55,10 +55,10 @@ export function About() {
           <p className="eyebrow">Команда</p>
           <h2>Руководство компании</h2>
           <div className="director-grid team-card">
-            <img src={asset("media/general-director.jpg")} alt="Генеральный директор DriveEX" />
+            <img src={asset("media/general-director.jpg")} alt="Монто Максим Александрович, генеральный директор DriveEX" />
             <div>
               <span className="avail static">Генеральный директор</span>
-              <h3>Имя Фамилия</h3>
+              <h3>Монто Максим Александрович</h3>
               <p className="lede">Руководит развитием компании, отвечает за качество сервиса, состояние автопарка и выполнение обязательств перед заказчиками.</p>
               <blockquote>
                 Текст о профессиональном опыте и подходе руководителя добавим после согласования финального содержания.

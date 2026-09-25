@@ -211,14 +211,14 @@ export function Home() {
 
       <section className="director" id="director-message">
         <div className="shell director-grid">
-          <img src={asset("media/general-director.jpg")} alt="Генеральный директор DriveEX" loading="lazy" decoding="async" />
+          <img src={asset("media/general-director.jpg")} alt="Монто Максим Александрович, генеральный директор DriveEX" loading="lazy" decoding="async" />
           <div>
             <p className="eyebrow light">Обращение генерального директора</p>
             <blockquote>
               Мы строим работу так, чтобы техника выходила на объект вовремя, а заказчик был уверен в результате.
             </blockquote>
             <p className="who">
-              <strong>Имя Фамилия</strong>
+              <strong>Монто Максим Александрович</strong>
               <span>Генеральный директор DriveEX</span>
             </p>
             <Link className="btn btn-orange" to="/about#team">
