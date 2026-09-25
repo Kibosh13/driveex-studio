@@ -78,7 +78,7 @@ function Header() {
       <div className={`header-card ${catalogOpen ? "is-open" : ""}`}>
       <div className="header-bar">
         <Link to="/" className="logo" aria-label="DriveEX — главная">
-          <img src={asset("media/driveex-logo-cropped.png")} alt="DriveEX" />
+          <img src={asset("media/logo.png")} alt="DriveEX" />
         </Link>
 
         <nav className="desk-nav" aria-label="Основная навигация">
@@ -354,7 +354,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <img src={asset("media/driveex-logo-cropped.png")} alt="DriveEX" />
+          <img src={asset("media/logo.png")} alt="DriveEX" />
           <p>Аренда спецтехники с оператором, топливом и доставкой на объект.</p>
         </div>
         <div>

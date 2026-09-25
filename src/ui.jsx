@@ -191,7 +191,7 @@ export function MachineCard({ item }) {
   return (
     <article className="machine">
       <Link to={`/catalog/${item.slug}`} className="machine-media">
-        <img src={asset(item.image)} alt={item.name} />
+        <img src={asset(item.image)} alt={item.name} loading="lazy" decoding="async" />
         <span>В наличии</span>
       </Link>
       <div className="machine-body">
