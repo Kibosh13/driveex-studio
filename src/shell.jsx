@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { address, asset, catalogSections, email, emailHref, equipment, money, phone, phoneHref, region, rentalGroups, services } from "./data";
+import { address, asset, catalogSections, email, emailHref, equipment, phone, phoneHref, priceLabel, region, rentalGroups, services, socials } from "./data";
 import { LeadModal, useLead } from "./ui";
+import { useSite } from "./site";
 
 const aboutLinks = [
   ["О компании", "/about"],
@@ -19,6 +20,7 @@ export function Frame({ children }) {
         {children}
       </main>
       <Footer />
+      <SocialDock />
       <LeadModal />
     </>
   );
@@ -272,7 +274,7 @@ function CatalogShelf({ open, setOpen, query, setQuery, onSearch }) {
                   <Link key={item.slug} to={`/catalog/${item.slug}`} onClick={close}>
                     <img src={asset(item.image)} alt="" />
                     <span>{item.name}</span>
-                    <b>от {money(item.hourPrice)}/час</b>
+                    <b>{priceLabel(item)}</b>
                   </Link>
                 ))
               ) : (
@@ -331,7 +333,7 @@ function CatalogShelf({ open, setOpen, query, setQuery, onSearch }) {
                   <img src={asset(item.image)} alt="" />
                   <span>
                     <b>{item.name}</b>
-                    <em>от {money(item.hourPrice)}/час</em>
+                    <em>{priceLabel(item)}</em>
                   </span>
                 </Link>
               ))}
@@ -345,6 +347,31 @@ function CatalogShelf({ open, setOpen, query, setQuery, onSearch }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SocialDock() {
+  const { content } = useSite();
+  const links = content.socials || socials;
+  const icons = {
+    telegram: (
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.4 15.6 9.2 19c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7l2.7-12.7c.2-1-.4-1.4-1.1-1.1L4.3 10.2c-1 .4-1 1-.2 1.2l4.2 1.3 9.8-6.2c.5-.3.9-.1.5.2z" /></svg>
+    ),
+    max: (
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v7a3.5 3.5 0 0 1-3.5 3.5H10l-4.2 2.4c-.5.3-1.1-.1-1.1-.7V6.5z" /></svg>
+    ),
+    whatsapp: (
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2A8.7 8.7 0 0 0 4.6 16.3L3.4 20.6l4.4-1.1A8.7 8.7 0 1 0 12 3.2zm4.9 12.3c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.3-1-2.5s.6-1.8.9-2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .5.4.2.6.7 2 .7 2.1.1.1 0 .3-.1.5l-.3.4c-.1.1-.2.3-.1.5.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.7-.8c.2-.2.3-.2.6-.1.2.1 1.6.8 1.9.9.3.2.4.2.5.3.1.2 0 .7-.2 1.3z" /></svg>
+    ),
+  };
+  return (
+    <div className="social-dock" aria-label="Мессенджеры">
+      {links.map((item) => (
+        <a key={item.id} href={item.href} target="_blank" rel="noreferrer" aria-label={item.label}>
+          {icons[item.id]}
+        </a>
+      ))}
     </div>
   );
 }
@@ -382,7 +409,7 @@ function Footer() {
       </div>
       <div className="shell footer-bottom">
         <span>© 2026 DriveEX</span>
-        <span>Информация не является публичной офертой</span>
+        <span>Указанные цены не являются публичной офертой</span>
       </div>
     </footer>
   );

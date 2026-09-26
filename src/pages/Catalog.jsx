@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { categoryFilters, equipment } from "../data";
+import { categoryFilters, equipment as fallbackEquipment } from "../data";
+import { useSite } from "../site";
 import { MachineCard, PageHero, usePageTitle } from "../ui";
 
 export function Catalog() {
   usePageTitle("Каталог");
-  const [params, setParams] = useSearchParams();
+  const { content } = useSite();
+  const equipment = content.equipment || fallbackEquipment;
+  const filters = content.categoryFilters || categoryFilters;
   const [category, setCategory] = useState("all");
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     const requested = params.get("category");
     const requestedQuery = params.get("q") || "";
-    if (requested && categoryFilters.some(([value]) => value === requested)) setCategory(requested);
+    if (requested && filters.some(([value]) => value === requested)) setCategory(requested);
     else setCategory("all");
     setQuery(requestedQuery);
   }, [params]);
@@ -24,7 +27,7 @@ export function Catalog() {
         const searchMatch = item.name.toLowerCase().includes(query.trim().toLowerCase());
         return categoryMatch && searchMatch;
       }),
-    [category, query],
+    [category, query, equipment],
   );
 
   function updateCategory(value) {
@@ -64,7 +67,7 @@ export function Catalog() {
             <p>Найдено: {filtered.length}</p>
           </div>
           <div className="chips" role="group" aria-label="Категории техники">
-            {categoryFilters.map(([value, label]) => (
+            {filters.map(([value, label]) => (
               <button key={value} type="button" className={category === value ? "is-on" : ""} onClick={() => updateCategory(value)}>
                 {label}
               </button>

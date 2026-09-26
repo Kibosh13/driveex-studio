@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { asset, money } from "./data";
+import { asset, priceLabel } from "./data";
 
 const LeadContext = createContext(null);
 
@@ -209,7 +209,7 @@ export function MachineCard({ item }) {
         </ul>
         <div className="machine-foot">
           <div>
-            <strong>от {money(item.hourPrice)}/час</strong>
+            <strong>{priceLabel(item)}</strong>
             <span>{item.minimum}</span>
           </div>
           <button type="button" onClick={() => lead.show(item.name)}>

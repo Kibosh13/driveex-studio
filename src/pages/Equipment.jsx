@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { asset, equipment, findEquipment, included, money } from "../data";
+import { asset, included, shiftLabel } from "../data";
+import { useSite } from "../site";
 import { MachineCard, useLead, usePageTitle } from "../ui";
 
 export function Equipment() {
   const { slug } = useParams();
-  const item = findEquipment(slug);
+  const { content } = useSite();
+  const item = content.equipment.find((entry) => entry.slug === slug);
   usePageTitle(item?.name || "Техника");
   const lead = useLead();
 
@@ -21,7 +23,7 @@ export function Equipment() {
     );
   }
 
-  const related = equipment.filter((entry) => entry.category === item.category && entry.slug !== item.slug).slice(0, 3);
+  const related = content.equipment.filter((entry) => entry.category === item.category && entry.slug !== item.slug).slice(0, 3);
 
   return (
     <>
@@ -49,9 +51,10 @@ export function Equipment() {
               </dl>
               <div className="price-box">
                 <p>Стоимость смены</p>
-                <strong>от {money(item.price)}</strong>
+                <strong>{shiftLabel(item)}</strong>
                 <span>
-                  {item.hourPrice.toLocaleString("ru-RU")} ₽/час · {item.minimum}. Итоговая цена зависит от адреса и условий работы.
+                  {item.price ? `${item.hourPrice.toLocaleString("ru-RU")} ₽/час · ` : ""}
+                  {item.minimum}. Итоговая цена зависит от адреса и условий работы. Указанные цены не являются публичной офертой.
                 </span>
               </div>
               <button className="btn btn-orange btn-block" type="button" onClick={() => lead.show(item.name)}>

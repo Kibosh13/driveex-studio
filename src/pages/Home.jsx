@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import { asset, benefits, equipment, faqs, homeCategories, money, steps } from "../data";
+import { asset, benefits, faqs as defaultFaqs, homeCategories as defaultCategories, steps } from "../data";
+import { useSite } from "../site";
 import { LeadForm, Reveal, useLead, usePageTitle } from "../ui";
 
 export function Home() {
   usePageTitle("");
+  const { content } = useSite();
   const lead = useLead();
+  const equipment = content.equipment;
+  const homeCategories = content.homeCategories || defaultCategories;
+  const faqs = content.faqs || defaultFaqs;
 
   return (
     <>
@@ -133,7 +138,7 @@ export function Home() {
                 <div>
                   <p>{item.categoryLabel}</p>
                   <h3>{item.name}</h3>
-                  <strong>от {money(item.hourPrice)}/час</strong>
+                  <strong>{priceLabel(item)}</strong>
                   <span>{item.minimum}</span>
                 </div>
               </Link>
@@ -218,8 +223,8 @@ export function Home() {
               Мы строим работу так, чтобы техника выходила на объект вовремя, а заказчик был уверен в результате.
             </blockquote>
             <p className="who">
-              <strong>Монто Максим Александрович</strong>
-              <span>Генеральный директор DriveEX</span>
+              <strong>{content.directorName}</strong>
+              <span>{content.directorRole}</span>
             </p>
             <Link className="btn btn-orange" to="/about#team">
               Подробнее о компании <i aria-hidden="true">→</i>

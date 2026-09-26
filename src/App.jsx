@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Frame } from "./shell";
 import { LeadProvider } from "./ui";
+import { SiteProvider } from "./site";
+import { Admin } from "./pages/Admin";
 import { Home } from "./pages/Home";
 import { Catalog } from "./pages/Catalog";
 import { Equipment } from "./pages/Equipment";
@@ -34,22 +36,23 @@ function ScrollManager() {
 export function App() {
   return (
     <BrowserRouter basename={basename}>
+      <SiteProvider>
       <LeadProvider>
         <ScrollManager />
-        <Frame>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/catalog/:slug" element={<Equipment />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/price-list" element={<Price />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Frame>
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/" element={<Frame><Home /></Frame>} />
+          <Route path="/catalog" element={<Frame><Catalog /></Frame>} />
+          <Route path="/catalog/:slug" element={<Frame><Equipment /></Frame>} />
+          <Route path="/services" element={<Frame><Services /></Frame>} />
+          <Route path="/projects" element={<Frame><Projects /></Frame>} />
+          <Route path="/price-list" element={<Frame><Price /></Frame>} />
+          <Route path="/about" element={<Frame><About /></Frame>} />
+          <Route path="/contacts" element={<Frame><Contacts /></Frame>} />
+          <Route path="*" element={<Frame><Home /></Frame>} />
+        </Routes>
       </LeadProvider>
+      </SiteProvider>
     </BrowserRouter>
   );
 }

@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
-import { equipment, money } from "../data";
+import { money } from "../data";
+import { useSite } from "../site";
 import { PageHero, useLead, usePageTitle } from "../ui";
 
 export function Price() {
   usePageTitle("Прайс-лист");
+  const { content } = useSite();
   const lead = useLead();
+  const equipment = content.equipment;
 
   return (
     <>
       <PageHero
         eyebrow="Стоимость аренды"
         title="Прайс-лист на спецтехнику"
-        text="Ориентировочные цены за час и рабочую смену. Итоговая стоимость зависит от адреса объекта, срока аренды и условий работы."
+        text="Ориентировочные цены за час и рабочую смену. Указанные цены не являются публичной офертой. Итоговая стоимость зависит от адреса объекта, срока аренды и условий работы."
       />
       <section className="section">
         <div className="shell">
@@ -31,8 +34,8 @@ export function Price() {
                       <Link to={`/catalog/${item.slug}`}>{item.name}</Link>
                     </td>
                     <td>{item.categoryLabel}</td>
-                    <td>{money(item.hourPrice)}</td>
-                    <td>{money(item.price)}</td>
+                    <td>{item.price ? money(item.hourPrice) : "по запросу"}</td>
+                    <td>{item.price ? money(item.price) : "по запросу"}</td>
                     <td>{item.minimum}</td>
                   </tr>
                 ))}

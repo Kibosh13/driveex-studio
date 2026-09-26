@@ -1,4 +1,5 @@
 import { asset } from "../data";
+import { useSite } from "../site";
 import { PageHero, useLead, usePageTitle } from "../ui";
 
 const principles = [
@@ -9,6 +10,7 @@ const principles = [
 
 export function About() {
   usePageTitle("О компании");
+  const { content } = useSite();
   const lead = useLead();
 
   return (
@@ -58,8 +60,8 @@ export function About() {
             <img src={asset("media/general-director.jpg")} alt="Монто Максим Александрович, генеральный директор DriveEX" />
             <div>
               <span className="avail static">Генеральный директор</span>
-              <h3>Монто Максим Александрович</h3>
-              <p className="lede">Руководит развитием компании, отвечает за качество сервиса, состояние автопарка и выполнение обязательств перед заказчиками.</p>
+              <h3>{content.directorName}</h3>
+              <p className="lede">{content.directorText}</p>
             </div>
           </div>
         </div>

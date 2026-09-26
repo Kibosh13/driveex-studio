@@ -511,9 +511,9 @@ p { margin: 0; }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 2.4rem; }
 .section-head .lede { margin-top: 0.8rem; max-width: 40rem; }
 
-.bento { display: grid; grid-template-columns: 1.35fr 1fr 1fr; grid-template-rows: 320px 320px; gap: 22px; }
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 280px; gap: 22px; }
 .bento > .reveal { height: 100%; }
-.bento-lead { grid-row: span 2; }
+.bento-lead { grid-column: span 2; grid-row: span 2; }
 .bento-card { position: relative; display: block; height: 100%; min-height: 240px; overflow: hidden; border-radius: 24px; color: white; text-decoration: none; }
 .bento-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
 .bento-card:hover img { transform: scale(1.06); }
@@ -745,6 +745,45 @@ td:nth-child(4) { font-weight: 800; }
 .modal-copy { color: var(--muted); margin-bottom: 0.9rem; }
 .modal-close { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--paper); cursor: pointer; font-size: 1.3rem; }
 
+.social-dock {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+}
+.social-dock a {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #141311;
+  color: white;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+.social-dock a:hover { background: var(--orange); }
+.social-dock svg { width: 26px; height: 26px; fill: currentColor; }
+
+.admin { min-height: 100vh; display: grid; grid-template-columns: 280px 1fr; background: #f3efe6; color: #141311; }
+.admin aside, .admin-card { background: #141311; color: white; padding: 1.5rem; }
+.admin aside { display: flex; flex-direction: column; gap: 0.45rem; }
+.admin aside button, .admin-card button { text-align: left; }
+.admin aside button.is-on { color: #ff4d1c; }
+.admin h1 { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.admin section { padding: 1.5rem; }
+.admin label, .admin-block label { display: grid; gap: 0.35rem; margin: 0.7rem 0; font-weight: 700; }
+.admin input, .admin textarea { width: 100%; border: 1px solid rgba(20,19,17,.15); border-radius: 12px; padding: 0.75rem; font: inherit; }
+.admin-card { width: min(420px, calc(100% - 2rem)); margin: 8vh auto; border-radius: 24px; }
+.admin-list { display: grid; gap: 0.7rem; margin-top: 1rem; }
+.admin-list article { display: grid; grid-template-columns: 84px 1fr auto auto; gap: 0.7rem; align-items: center; background: white; border-radius: 16px; padding: 0.5rem; }
+.admin-list img, .admin-modal img { width: 84px; height: 64px; object-fit: cover; border-radius: 10px; }
+.admin-pair { display: grid; gap: 0.4rem; margin-bottom: 0.8rem; }
+.admin-modal { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: grid; place-items: center; padding: 1rem; }
+.admin-modal > div { width: min(640px, 100%); max-height: 90vh; overflow: auto; background: white; border-radius: 24px; padding: 1.2rem; }
+.admin-actions { display: flex; gap: 0.6rem; }
+@media (max-width: 800px) { .admin { grid-template-columns: 1fr; } }
 .site-footer { background: #100f0d; color: rgba(255, 255, 255, 0.7); padding-top: 4.6rem; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 0.8fr 0.8fr 1.1fr; gap: 2rem; }
 .site-footer img { height: 48px; width: auto; }
